@@ -1,0 +1,62 @@
+Código SQL remodelado:
+
+CREATE TABLE barbearia (
+    registro_barbearia INT PRIMARY KEY,  
+    bairro VARCHAR(255),
+telefone VARCHAR(20)
+);
+
+CREATE TABLE cliente (
+    cod_cliente INT PRIMARY KEY,  
+    email VARCHAR(255),  
+    telefone VARCHAR(20),  
+    endereco VARCHAR(255),  
+    nome VARCHAR(255),  
+    idbarbearia INT,
+    FOREIGN KEY (idbarbearia) REFERENCES barbearia (registro_barbearia)
+);
+
+CREATE TABLE pessoa_fisica (
+    cpf VARCHAR(11) PRIMARY KEY,  
+    idcliente INT,
+FOREIGN KEY (idcliente) REFERENCES cliente (cod_cliente)
+);
+CREATE TABLE pessoa_juridica (
+    cnpj VARCHAR(14) PRIMARY KEY,  
+    idcliente INT,
+    FOREIGN KEY (idcliente) REFERENCES cliente (cod_cliente)
+);
+CREATE TABLE solicitacao (
+    cod_solicitacao INT PRIMARY KEY,  
+    data DATE,  
+    hora TIME,  
+    valor_servico DECIMAL(10, 2),  
+    idcliente INT,
+    FOREIGN KEY (idcliente) REFERENCES cliente (cod_cliente)
+);
+CREATE TABLE item_servico (
+ quantidade INT, 
+ cod_item INT PRIMARY KEY, 
+ idsolicitacao INT,
+ FOREIGN KEY (idsolicitacao) REFERENCES solicitacao (cod_solicitacao)
+);
+CREATE TABLE servico (
+    cod_servico INT PRIMARY KEY,  
+    valor_servico DECIMAL(10, 2),  
+    tipo VARCHAR(255),  
+    iditem_servico INT,
+    FOREIGN KEY (iditem_servico) REFERENCES item_servico (cod_item)
+);
+
+CREATE TABLE funcionario (
+    idade INT,  
+    nome VARCHAR(255),  
+    telefone VARCHAR(20),  
+    funcao VARCHAR(255),  
+    cpf VARCHAR(11),  
+    cod_funcionario INT PRIMARY KEY,  
+    email VARCHAR(255),  
+    estado_civil VARCHAR(50),  
+    idservico INT,
+    FOREIGN KEY (idservico) REFERENCES servico (cod_servico)
+);
