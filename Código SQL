@@ -1,0 +1,86 @@
+Código SQL:
+CREATE TABLE barbearia 
+( 
+ registro_barbearia INT PRIMARY KEY,  
+ endereco VARCHAR(n), 
+ telefone VARCHAR(n),   
+); 
+
+CREATE TABLE cliente 
+( 
+ cod_cliente INT PRIMARY KEY,  
+ email VARCHAR(n),  
+ telefone INT,  
+ endereço VARCHAR(n),  
+ nome VARCHAR(n),  
+ idbarbearia INT,  
+); 
+
+CREATE TABLE pessoa_fisica 
+( 
+ cpf VARCHAR(n),  
+ idcliente INT,  
+ idcliente INT,  
+); 
+CREATE TABLE pessoa_juridica 
+( 
+ cnpj VARCHAR(n), 
+ idcliente INT, 
+);
+CREATE TABLE solicitacao 
+( 
+ cod_solicitacao INT PRIMARY KEY,  
+ data DATE,  
+ hora INT,  
+ valor_servico INT,  
+ idcliente INT,  
+); 
+
+CREATE TABLE item_servico 
+( 
+ quantidade INT,  
+ cod_item INT PRIMARY KEY,  
+ idsolicitacao INT,  
+ idcontem INT,  
+); 
+
+CREATE TABLE servico 
+( 
+ cod_servico INT PRIMARY KEY,  
+ valor_servico INT,  
+ tipo INT,  
+ iditem_servico INT,  
+); 
+CREATE TABLE funcionario 
+( 
+ idade INT,  
+ nome VARCHAR(n),  
+ telefone VARCHAR(n),  
+ funcao VARCHAR(n),  
+ cpf INT,  
+ cod_funcionario INT PRIMARY KEY,  
+ email VARCHAR(n),  
+ estado_civil VARCHAR(n),  
+ idrealiza INT,  
+);
+CREATE TABLE contem 
+( 
+ idsolicitacao INT,  
+); 
+
+CREATE TABLE realiza 
+( 
+ idservico INT,  
+); 
+
+ALTER TABLE cliente ADD FOREIGN KEY(idbarbearia) REFERENCES barbearia (idbarbearia)
+ALTER TABLE pessoa_fisica ADD FOREIGN KEY(idcliente) REFERENCES cliente (idcliente)
+ALTER TABLE pessoa_fisica ADD FOREIGN KEY(idcliente) REFERENCES cliente (idcliente)
+ALTER TABLE pessoa_juridica ADD FOREIGN KEY(idcliente) REFERENCES cliente (idcliente)
+ALTER TABLE solicitacao ADD FOREIGN KEY(idcliente) REFERENCES cliente (idcliente)
+ALTER TABLE item_servico ADD FOREIGN KEY(idsolicitacao) REFERENCES solicitacao (idsolicitacao)
+ALTER TABLE item_servico ADD FOREIGN KEY(idcontem) REFERENCES contem (idcontem)
+ALTER TABLE servico ADD FOREIGN KEY(iditem_servico) REFERENCES item_servico (iditem_servico)
+ALTER TABLE funcionario ADD FOREIGN KEY(idrealiza) REFERENCES realiza (idrealiza)
+ALTER TABLE contem ADD FOREIGN KEY(idsolicitacao) REFERENCES solicitacao (idsolicitacao)
+ALTER TABLE realiza ADD FOREIGN KEY(idservico) REFERENCES servico (idservico)
